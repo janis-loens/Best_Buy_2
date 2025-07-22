@@ -1,0 +1,15 @@
+# IDE/Editor settings
+.settings
+.vscode
+
+# Byte-compiled / cache files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Environment files
+.env
+
+# System files
+.DS_Store
