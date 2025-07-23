@@ -16,7 +16,7 @@ A simple command-line application simulating a basic store system. Users can vie
 ## Project Structure
 
 ```
-Best_Buy2/
+Best_Buy_2/
 ├── main.py             # Main CLI application
 ├── products.py         # Product and InventoryError classes
 ├── store.py            # Store class handling inventory and orders
