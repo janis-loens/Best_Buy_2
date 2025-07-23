@@ -213,3 +213,14 @@ class LimitedProduct(Product):
             self.set_quantity(self.quantity - quantity)
             return price
 
+        def show(self) -> None:
+            """Display the product details.
+
+            Args:
+                None
+
+            Returns:
+                None
+            """
+            return f"{self.name}, Price($): {self.price}, Limited to {self.maximum} per order!" if self.name == "Shipping" else f"{self.name}, Price($): {self.price}, Limited to {self.maximum} per order! Quantity: {self.quantity}"
+
