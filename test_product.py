@@ -1,5 +1,5 @@
 import pytest
-from products import Product, InventoryError
+from products import Product, InventoryError, NonStockedProduct, LimitedProduct
 
 
 def test_product_creation_successful():

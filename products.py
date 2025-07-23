@@ -131,7 +131,85 @@ class Product:
             raise InventoryError(f"{quantity} items requested, but {self.quantity} "
                                  f"units of {self.name} are available for purchase.")
         price = quantity * self.price
-        self.quantity -= quantity
-        if self.quantity == 0:
-            self.deactivate()
+        self.set_quantity(self.quantity - quantity)
         return price
+
+class NonStockedProduct(Product):
+    def __init__(self,name:str, price: float):
+        super().__init__(name, price, quantity=0)
+        self.active = True
+    
+    def set_quantity(self, quantity):
+        """Does nothing as quantity does not change for NonStockedProduct."""
+        pass
+
+    def get_quantity(self):
+        """Always return unlimited quantity.
+
+        Args:
+            None
+
+        Returns:
+            float: The quantity of the product.
+        """
+        return float(inf)
+    
+
+    def show(self) -> None:
+        """Display the product details.
+
+        Args:
+            None
+
+        Returns:
+            None
+        """
+        return f"{self.name}, Price($): {self.price}, Quantity: Unlimited"
+
+
+    def buy(self, quantity: int) -> float:
+        """Buy a quantity of the non-stocked product.
+        No stock is subtracted, but quantity must be positive.
+
+        Args:
+            quantity(int): The quantity of the product to buy.
+
+        Returns:
+            float: The total price of the purchase.
+        """
+        if quantity <= 0:
+            raise ValueError("Quantity must be greater than zero.")
+        return quantity * self.price
+
+
+class LimitedProduct(Product):
+
+        def __init__(self,name:str, price: float, quantity, maximum: int):
+            super().__init__(name, price, quantity)
+            self.maximum = maximum
+        
+        def buy(self, quantity: int) -> float:
+            """Buy a quantity of the product.
+
+            Args:
+                quantity (int): The quantity of the product to buy.
+
+            Raises:
+                ValueError: If the quantity is not valid.
+                InventoryError: If there is not enough inventory to fulfill the purchase.
+
+            Returns:
+                float: The total price of the purchase.
+            """
+            if quantity > self.maximum:
+                raise ValueError("Quantity cannot exceed the purchase limit.")
+            if not self.is_active():
+                raise InventoryError(f"The product {self.name} is not available for purchase.")
+
+            if self.quantity < quantity:
+                raise InventoryError(f"{quantity} items requested, but {self.quantity} "
+                                    f"units of {self.name} are available for purchase.")
+            price = quantity * self.price
+            self.set_quantity(self.quantity - quantity)
+            return price
+
