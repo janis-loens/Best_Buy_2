@@ -32,6 +32,10 @@ class Product:
         self.price = price
         self.quantity = quantity
         self.active = True
+    
+
+    def __str__(self):
+        return f"{self.name}, Price($): {self.price}, Quantity: {self.quantity}, Promotion: {self.promotion}"
 
 
     def get_quantity(self) -> int:
@@ -107,7 +111,7 @@ class Product:
         Returns:
             None
         """
-        return f"{self.name}, Price($): {self.price}, Quantity: {self.quantity}, Promotion: {self.get_promotion()}"
+        return f"{self.name}, Price($): {self.price}, Quantity: {self.quantity}, Promotion: {self.promotion}"
 
 
     def buy(self, quantity: int) -> float:
@@ -180,7 +184,7 @@ class NonStockedProduct(Product):
         Returns:
             None
         """
-        return f"{self.name}, Price($): {self.price}, Quantity: Unlimited, Promotion: {self.get_promotion()}"
+        return f"{self.name}, Price($): {self.price}, Quantity: Unlimited, Promotion: {self.promotion}"
 
 
     def buy(self, quantity: int) -> float:
@@ -238,5 +242,5 @@ class LimitedProduct(Product):
             Returns:
                 None
             """
-            return f"{self.name}, Price($): {self.price}, Limited to {self.maximum} per order!" if self.name == "Shipping" else f"{self.name}, Price($): {self.price}, Limited to {self.maximum} per order! Quantity: {self.quantity}, Promotion: {self.get_promotion()}"
+            return f"{self.name}, Price($): {self.price}, Limited to {self.maximum} per order!" if self.name == "Shipping" else f"{self.name}, Price($): {self.price}, Limited to {self.maximum} per order! Quantity: {self.quantity}, Promotion: {self.promotion}"
 

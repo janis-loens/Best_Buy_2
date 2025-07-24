@@ -11,11 +11,16 @@ class Promotion(ABC):
     def apply_promotion(self, product, quantity) -> float:
        pass
 
+
 class SecondHalfPrice(Promotion):
     """A class representing the second-half-price promotion"""
 
     def __init__(self, name: str):
         self.name = name
+
+    
+    def __str__(self):
+        return self.name
 
     
     def apply_promotion(self, product, quantity: int) -> float:
@@ -50,6 +55,9 @@ class ThirdOneFree(Promotion):
     def __init__(self, name: str):
       self.name = name
 
+    def __str__(self):
+        return self.name
+
     def apply_promotion(self, product, quantity) -> float:
         """Applies promotion if eligible.
 
@@ -74,6 +82,9 @@ class PercentDiscount(Promotion):
     def __init__(self, name: str, percent: float):
       self.name = name
       self.discount = percent
+    
+    def __str__(self):
+        return self.name
 
     def apply_promotion(self, product, quantity: int) -> float:
         """Applies promotion if eligible.
