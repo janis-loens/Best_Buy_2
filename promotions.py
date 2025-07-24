@@ -8,7 +8,7 @@ class Promotion(ABC):
     """An abstract class outlining promotion functionality"""
 
     @abstractmethod
-    def apply_promotion(product, quantity) -> float:
+    def apply_promotion(self, product, quantity) -> float:
        pass
 
 class SecondHalfPrice(Promotion):
@@ -18,7 +18,7 @@ class SecondHalfPrice(Promotion):
         self.name = name
 
     
-    def apply_promotion(product, quantity: int) -> float:
+    def apply_promotion(self, product, quantity: int) -> float:
         """Applies promotion if eligible.
 
         Args:
@@ -27,7 +27,7 @@ class SecondHalfPrice(Promotion):
 
         Returns:
             float: The total price after discount.
-            
+
         Raises:
             PromotionError: If purchase is not eligible for promotion.
         """
@@ -45,9 +45,49 @@ class SecondHalfPrice(Promotion):
 
 
 class ThirdOneFree(Promotion):
-    """A class representing the second-half-price promotion"""
-    pass
+    """A class representing the third-one-free promotion"""
 
-class PrecentDiscount(Promotion):
-    """A class representing the second-half-price promotion"""
-    pass
+    def __init__(self, name: str):
+      self.name = name
+
+    def apply_promotion(self, product, quantity) -> float:
+        """Applies promotion if eligible.
+
+        Args:
+            product: The product to apply the promotion on.
+            quantity(int): The quantity of products.
+
+        Returns:
+            float: The total price after discount.
+            
+        Raises:
+            PromotionError: If purchase is not eligible for promotion.
+        """
+        if quantity < 3:
+            raise PromotionError("Cannot apply Promotion if quantity is less than three.")
+        paid_items = quantity - (quantity // 3)
+        total_price = product.price * paid_items
+        return total_price
+
+class PercentDiscount(Promotion):
+    """A class representing the percent discount promotion"""
+    def __init__(self, name: str, percent: float):
+      self.name = name
+      self.discount = percent
+
+    def apply_promotion(self, product, quantity: int) -> float:
+        """Applies promotion if eligible.
+
+        Args:
+            product: The product to apply the promotion on.
+            quantity(int): The quantity of products.
+
+        Returns:
+            float: The total price after discount.
+       """
+        discount = product.price * self.discount / 100
+        discounted_price = product.price - discount
+        total_price = discounted_price * quantity
+        return total_price
+
+
