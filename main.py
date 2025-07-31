@@ -62,6 +62,9 @@ def handle_order(store_instance, products: list) -> None:
                 except InventoryError as inventory_error:
                     print(inventory_error)
                     pause()
+                except ValueError as value_error:
+                    print(value_error)
+                    pause()
             else:
                 print("\nThe selected product number is invalid.\n")
 

@@ -199,7 +199,11 @@ class NonStockedProduct(Product):
         """
         if quantity <= 0:
             raise ValueError("Quantity must be greater than zero.")
-        return quantity * self.price
+        if self.promotion:
+            price = self.promotion.apply_promotion(self, quantity)
+        else:
+            price = quantity * self.price
+        return price
 
 
 class LimitedProduct(Product):
@@ -229,7 +233,10 @@ class LimitedProduct(Product):
             if self.quantity < quantity:
                 raise InventoryError(f"{quantity} items requested, but {self.quantity} "
                                     f"units of {self.name} are available for purchase.")
-            price = quantity * self.price
+            if self.promotion:
+                price = self.promotion.apply_promotion(self, quantity)
+            else:
+                price = quantity * self.price
             self.set_quantity(self.quantity - quantity)
             return price
 

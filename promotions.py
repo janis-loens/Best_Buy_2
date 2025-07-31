@@ -37,7 +37,7 @@ class SecondHalfPrice(Promotion):
             PromotionError: If purchase is not eligible for promotion.
         """
         if quantity < 2:
-            raise PromotionError("Cannot apply Promotion if quantity is less than two.")
+            return product.price * quantity
         eligible_promotion_times = quantity // 2
         reminder_times = quantity % 2
 
@@ -72,7 +72,7 @@ class ThirdOneFree(Promotion):
             PromotionError: If purchase is not eligible for promotion.
         """
         if quantity < 3:
-            raise PromotionError("Cannot apply Promotion if quantity is less than three.")
+            return product.price * quantity
         paid_items = quantity - (quantity // 3)
         total_price = product.price * paid_items
         return total_price
